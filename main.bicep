@@ -1,7 +1,7 @@
 param region string = 'SouthCentralUS'
 @minLength(3)
 @maxLength(24)
-param StoAccountName string ='KevBicepStorageDemo'
+param StoAccountName string ='kevbicepstoragedemo'
 
 resource storage 'Microsoft.Storage/storageAccounts@2019-06-01' = {
   name: StoAccountName
