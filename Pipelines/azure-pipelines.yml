@@ -7,7 +7,14 @@ trigger:
 - main
 
 pool:
-  vmImage: ubuntu-latest
+  vmImage: windows-latest
+
+- task: AzureCLI@2
+  inputs:
+    azureSubscription: 'Visual Studio Enterprise Subscription (7e453d73-03a4-4e0f-be6d-85545b0e91d5)'
+    scriptType: 'ps'
+    scriptLocation: 'inlineScript'
+    inlineScript: 'az deployment group create -f ./BicepFiles/main.bicep -g $RGname --parameters region=$region StoAccountName=$StoAccountName ContainerName=$ContainerName sku=$sku'
 
 steps:
 - script: echo Hello, world!
