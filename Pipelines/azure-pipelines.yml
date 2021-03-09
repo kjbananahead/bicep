@@ -1,0 +1,22 @@
+name: $(BuildDefinitionName)_$(date:yyyyMMdd)$(rev:.r)
+
+trigger:
+ batch: true
+ branches:
+   include:
+     - master
+
+pool:
+  vmImage: windows-latest
+
+variables:
+  - group: 'Common Variables'
+  
+steps:
+- script: echo Hello, world!
+  displayName: 'Run a one-line script'
+
+- script: |
+    echo Add other tasks to build, test, and deploy your project.
+    echo See https://aka.ms/yaml
+  displayName: 'Run a multi-line script'
