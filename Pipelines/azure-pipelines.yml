@@ -11,7 +11,11 @@ pool:
 
 variables:
   - group: 'Common Variables'
-  
+
+stages:
+  - stage: DevTest
+    environment: DevTest
+
 steps:
 - script: echo Hello, world!
   displayName: 'Run a one-line script'
