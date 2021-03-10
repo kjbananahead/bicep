@@ -10,7 +10,7 @@ pool:
   vmImage: windows-latest
 
 variables:
-  releaseTemplate: 'Pipelines/azure-pipelines-release.yml'
+  releaseTemplate: './azure-pipelines-release.yml'
 
 stages:
 - stage: 'DevTest'
