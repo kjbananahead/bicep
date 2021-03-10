@@ -1,32 +1,19 @@
+targetScope = 'subscription'
+param RGname string = 'kev-bicep-demo'
 param region string = 'SouthCentralUS'
 
-@minLength(3)
-@maxLength(24)
-param StoAccountName string = 'kevbicepstodemo'
-
-param ContainerName string = 'images'
-
-@allowed([
-  'Premium_LRS'
-  'Premium_ZRS'
-  'Standard_GRS'
-  'Standard_LRS'
-  'Standard_RAGRS'
-  'Standard_ZRS'
-])
-param sku string = 'Standard_LRS'
-
-resource stoAcct 'Microsoft.Storage/storageAccounts@2020-08-01-preview' = {
-  name: StoAccountName
+resource rg 'Microsoft.Resources/resourceGroups@2020-06-01' = {
+  name: RGname
   location: region
-  kind: 'StorageV2'
-  sku: {
-    name: sku
-  }
 }
 
-resource container 'Microsoft.Storage/storageAccounts/blobServices/containers@2020-08-01-preview' = {
-  name: '${stoAcct.name}/default/${ContainerName}'
+module StoAcct './StoAcct.bicep' = {
+name: 'StoAcctDeploy'
+scope: resourceGroup(rg.name)
+params: {
+  ContainerName: ''
+  region: 'SouthCentralUS'
+  sku: 'Standard_LRS'
+  StoAccountName: 'kevbicepstodemo'
 }
-
-output storageId string = stoAcct.id
+}
