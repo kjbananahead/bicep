@@ -7,7 +7,7 @@ resource rg 'Microsoft.Resources/resourceGroups@2020-06-01' = {
   location: region
 }
 
-module StoAcct './StoAcct.bicep' = {
+module StoAcctMod './StoAcct.bicep' = {
 name: 'StoAcctDeploy'
 scope: resourceGroup(rg.name)
 params: {
