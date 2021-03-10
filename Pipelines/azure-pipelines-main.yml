@@ -1,0 +1,30 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- main
+
+pool:
+  vmImage: windows-latest
+
+variables:
+  releaseTemplate: 'Pipelines/azure-pipelines-release.yml'
+
+stages:
+- stage: 'DevTest'
+  displayName: 'Deploy to DevTest environment'
+  jobs:
+  - template: ${{ variables.releaseTemplate }}
+    parameters:
+      variableGroup: 'Dev Variables'
+      environment: 'DevTest'
+
+- stage: 'Prod'
+  displayName: 'Deploy to Prod environment'
+  jobs:
+  - template: ${{ variables.releaseTemplate }}
+    parameters:
+      variableGroup: 'Prod Variables'
+      environment: 'Prod'

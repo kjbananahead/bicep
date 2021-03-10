@@ -1,0 +1,40 @@
+parameters:
+- name: variableGroup
+  type: string
+
+- name: environment
+  type: string
+
+jobs:
+  - deployment: DeploySolution
+    displayName: 'Create RG & Deploy Storage Account'
+    variables:
+      - group: ${{ parameters.variableGroup }} # points to variable group in Azure DevOps
+    environment: ${{ parameters.environment }} # points to environments in Azure DevOps
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - task: AzureCLI@2
+            displayName: 'Upgrade AzCLI'
+            inputs:
+            azureSubscription: $(ServiceConnectionName)
+            scriptType: 'ps'
+            scriptLocation: 'inlineScript'
+            inlineScript: 'az upgrade'
+
+          - task: AzureCLI@2
+            displayName: 'Create RG'
+            inputs:
+            azureSubscription: $(ServiceConnectionName)
+            scriptType: 'ps'
+            scriptLocation: 'inlineScript'
+            inlineScript: 'az group create --name $(RGname) --location $(region)'
+         
+          - task: AzureCLI@2
+            displayName: 'Deploy Bicep File'
+            inputs:
+            azureSubscription: $(ServiceConnectionName)
+            scriptType: 'ps'
+            scriptLocation: 'inlineScript'
+            inlineScript: 'az deployment group create -f ./BicepFiles/StoAcct.bicep -g $(RGname) --parameters region=$(region) StoAccountName=$(StoAccountName) ContainerName=$(ContainerName) sku=$(sku)'    
