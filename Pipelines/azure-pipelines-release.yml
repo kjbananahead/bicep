@@ -5,12 +5,11 @@ parameters:
 - name: environment
   type: string
 
-variables:
-  - group: ${{ parameters.variableGroup }} # points to variable group in Azure DevOps
-
 jobs:
   - deployment: DeploySolution
     displayName: 'Create RG & Deploy Storage Account'
+    variables:
+    - group: ${{ parameters.variableGroup }} # points to variable group in Azure DevOps
     environment: ${{ parameters.environment }} # points to environments in Azure DevOps
     strategy:
       runOnce:
