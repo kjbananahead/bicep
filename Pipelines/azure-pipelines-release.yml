@@ -18,7 +18,7 @@ jobs:
           - task: AzureCLI@2
             displayName: 'Upgrade AzCLI'
             inputs:
-             azureSubscription: '$(ServiceConnectionName)'
+             azureSubscription: $(ServiceConnectionName)
              scriptType: 'ps'
              scriptLocation: 'inlineScript'
              inlineScript: 'az upgrade'
@@ -26,7 +26,7 @@ jobs:
           - task: AzureCLI@2
             displayName: 'Create RG'
             inputs:
-             azureSubscription: '$(ServiceConnectionName)'
+             azureSubscription: $(ServiceConnectionName)
              scriptType: 'ps'
              scriptLocation: 'inlineScript'
              inlineScript: 'az group create --name $(RGname) --location $(region)'
@@ -34,7 +34,7 @@ jobs:
           - task: AzureCLI@2
             displayName: 'Deploy Bicep File'
             inputs:
-             azureSubscription: '$(ServiceConnectionName)'
+             azureSubscription: $(ServiceConnectionName)
              scriptType: 'ps'
              scriptLocation: 'inlineScript'
              inlineScript: 'az deployment group create -f ./BicepFiles/StoAcct.bicep -g $(RGname) --parameters region=$(region) StoAccountName=$(StoAccountName) ContainerName=$(ContainerName) sku=$(sku)'    
