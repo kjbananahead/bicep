@@ -18,7 +18,7 @@ jobs:
           - task: AzureCLI@2
             displayName: 'Upgrade AzCLI'
             inputs:
-             azureSubscription: $(ServiceConnectionName)
+             azureSubscription: 'Visual Studio Enterprise Subscription (7e453d73-03a4-4e0f-be6d-85545b0e91d5)'
              scriptType: 'ps'
              scriptLocation: 'inlineScript'
              inlineScript: 'az upgrade'
@@ -26,7 +26,7 @@ jobs:
           - task: AzureCLI@2
             displayName: 'Create RG'
             inputs:
-             azureSubscription: $(ServiceConnectionName)
+             azureSubscription: 'Visual Studio Enterprise Subscription (7e453d73-03a4-4e0f-be6d-85545b0e91d5)'
              scriptType: 'ps'
              scriptLocation: 'inlineScript'
              inlineScript: 'az group create --name $(RGname) --location $(region)'
@@ -34,7 +34,7 @@ jobs:
           - task: AzureCLI@2
             displayName: 'Deploy Bicep File'
             inputs:
-             azureSubscription: $(ServiceConnectionName)
+             azureSubscription: 'Visual Studio Enterprise Subscription (7e453d73-03a4-4e0f-be6d-85545b0e91d5)'
              scriptType: 'ps'
              scriptLocation: 'inlineScript'
              inlineScript: 'az deployment group create -f ./BicepFiles/StoAcct.bicep -g $(RGname) --parameters region=$(region) StoAccountName=$(StoAccountName) ContainerName=$(ContainerName) sku=$(sku)'    
