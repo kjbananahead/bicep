@@ -18,7 +18,7 @@ stages:
   jobs:
   - template: ${{ variables.releaseTemplate }}
     parameters:
-      variableGroup: 'Dev Variables'
+      variableGroup: 'Dev-Variables'
       environment: 'DevTest'
 
 - stage: 'Prod'
@@ -26,5 +26,5 @@ stages:
   jobs:
   - template: ${{ variables.releaseTemplate }}
     parameters:
-      variableGroup: 'Prod Variables'
+      variableGroup: 'Prod-Variables'
       environment: 'Prod'
