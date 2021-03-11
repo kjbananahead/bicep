@@ -21,7 +21,7 @@ jobs:
              azureSubscription: 'Visual Studio Enterprise Subscription (7e453d73-03a4-4e0f-be6d-85545b0e91d5)'
              scriptType: 'ps'
              scriptLocation: 'inlineScript'
-             inlineScript: 'az upgrade'
+             inlineScript: 'az upgrade --yes'
 
           - task: AzureCLI@2
             displayName: 'Create RG'
