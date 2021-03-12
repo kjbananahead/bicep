@@ -9,13 +9,14 @@ trigger:
 pool: 'Kevin Self-Hosted'
 
 variables:
-  releaseTemplate: './azure-pipelines-release.yml'
+  DevReleaseTemplate: './azure-pipelines-release-devtest.yml'
+  ProdReleaseTemplate: './azure-pipelines-release-prod.yml'
 
 stages:
 - stage: 'DevTest'
   displayName: 'Deploy to DevTest environment'
   jobs:
-  - template: ${{ variables.releaseTemplate }}
+  - template: ${{ variables.DevReleaseTemplate }}
     parameters:
       variableGroup: 'Dev-Variables'
       environment: 'DevTest'
@@ -23,7 +24,7 @@ stages:
 - stage: 'Prod'
   displayName: 'Deploy to Prod environment'
   jobs:
-  - template: ${{ variables.releaseTemplate }}
+  - template: ${{ variables.ProdReleaseTemplate }}
     parameters:
       variableGroup: 'Prod-Variables'
       environment: 'Prod'
