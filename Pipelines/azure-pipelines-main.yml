@@ -16,8 +16,9 @@ stages:
 - stage: 'Checkout Source'
   displayName: 'Checkout source code to build agent' 
   jobs:
-  steps:
-  - checkout: self
+  -job: 'Checkout source'
+   steps:
+   - checkout: self
 
 - stage: 'DevTest'
   displayName: 'Deploy to DevTest environment'
