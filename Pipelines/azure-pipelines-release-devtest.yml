@@ -37,4 +37,4 @@ jobs:
              azureSubscription: 'DevTest-ServiceConnection'
              scriptType: 'ps'
              scriptLocation: 'inlineScript'
-             inlineScript: 'az deployment group create -f $(Agent.BuildDirectory)/BicepFiles/StoAcct.bicep -g $(RGname) --parameters region=$(region) StoAccountName=$(StoAccountName) ContainerName=$(ContainerName) sku=$(sku)'    
+             inlineScript: 'az deployment group create -f $(Agent.BuildDirectory)/s/BicepFiles/StoAcct.bicep -g $(RGname) --parameters region=$(region) StoAccountName=$(StoAccountName) ContainerName=$(ContainerName) sku=$(sku)'    
