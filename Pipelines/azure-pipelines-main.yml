@@ -15,6 +15,7 @@ variables:
 stages:
 - stage: 'Checkout Source'
   displayName: 'Checkout source code to build agent' 
+  jobs:
   steps:
   - checkout: self
 
