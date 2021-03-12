@@ -12,14 +12,6 @@ variables:
   DevReleaseTemplate: './azure-pipelines-release-devtest.yml'
   ProdReleaseTemplate: './azure-pipelines-release-prod.yml'
 
-stages:
-- stage: 'Checkout Source'
-  displayName: 'Checkout source code to build agent' 
-  jobs:
-  -job: 'Checkout source'
-   steps:
-   - checkout: self
-
 - stage: 'DevTest'
   displayName: 'Deploy to DevTest environment'
   jobs:
