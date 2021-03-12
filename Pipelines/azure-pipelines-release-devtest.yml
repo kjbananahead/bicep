@@ -15,7 +15,6 @@ jobs:
       runOnce:
         deploy:
           steps:
-          - checkout: self
           
           - task: AzureCLI@2
             displayName: 'Upgrade AzCLI'
