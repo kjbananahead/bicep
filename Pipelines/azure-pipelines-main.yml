@@ -12,6 +12,7 @@ variables:
   DevReleaseTemplate: './azure-pipelines-release-devtest.yml'
   ProdReleaseTemplate: './azure-pipelines-release-prod.yml'
 
+stages:
 - stage: 'DevTest'
   displayName: 'Deploy to DevTest environment'
   jobs:
