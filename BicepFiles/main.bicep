@@ -1,19 +1,24 @@
 targetScope = 'subscription'
-param RGname string = 'kev-bicep-demo'
-param region string = 'SouthCentralUS'
+param RGname string = '$(RGname)'
+param region string = '$(region)'
+
+param ContainerName string = '$(ContainerName)'
+param StoAccountName string = '$(StoAccountName)'
+param sku string = '$(sku)'
+
 
 resource rg 'Microsoft.Resources/resourceGroups@2020-06-01' = {
   name: RGname
   location: region
 }
 
-module StoAcctMod './StoAcct.bicep' = {
+module StoAcctMod 'StoAcct.bicep' = {
 name: 'StoAcctDeploy'
-scope: resourceGroup(rg.name)
+scope: rg
 params: {
-  ContainerName: ''
-  region: 'SouthCentralUS'
-  sku: 'Standard_LRS'
-  StoAccountName: 'kevbicepstodemo'
+  ContainerName: ContainerName
+  region: region
+  sku: sku
+  StoAccountName: StoAccountName
 }
 }
