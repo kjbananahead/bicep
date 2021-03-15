@@ -30,4 +30,4 @@ jobs:
              azureSubscription: 'KevinCurran-InternalSub'
              scriptType: 'ps'
              scriptLocation: 'inlineScript'
-             inlineScript: 'az deployment sub create -f $(Agent.BuildDirectory)/s/BicepFiles/main.bicep -l $(region) --parameters RGname=$(RGname) region=$(region) StoAccountName=$(StoAccountName) ContainerName=$(ContainerName) sku=$(sku) WorskpaceName=$(WorkspaceName)'    
+             inlineScript: 'az deployment sub create -f $(Agent.BuildDirectory)/s/BicepFiles/main.bicep -l $(region) --parameters RGname=$(RGname) region=$(region) StoAccountName=$(StoAccountName) ContainerName=$(ContainerName) sku=$(sku) WorkspaceName=$(WorkspaceName)'    
