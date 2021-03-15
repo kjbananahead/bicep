@@ -6,6 +6,7 @@ param ContainerName string
 param StoAccountName string
 param sku string = 'Standard_LRS'
 
+param WorkspaceName string
 
 resource rg 'Microsoft.Resources/resourceGroups@2020-06-01' = {
   name: RGname
@@ -21,4 +22,13 @@ params: {
   sku: sku
   StoAccountName: StoAccountName
 }
+}
+
+module LogWorkspaceMod 'LogWorkspace.bicep' = {
+  name: 'LogWorkspaceDeploy'
+  scope: rg
+  params: {
+    WorkspaceName: WorkspaceName
+    region: region
+  }
 }
