@@ -9,4 +9,4 @@ resource logWorkspace 'Microsoft.OperationalInsights/workspaces@2020-10-01' = {
 }
 
 
-output WorkspaceId string = logWorkspace.id
+output WorkspaceId string = logWorkspace.properties.customerId
