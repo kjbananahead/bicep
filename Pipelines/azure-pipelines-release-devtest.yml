@@ -24,14 +24,6 @@ jobs:
              scriptType: 'ps'
              scriptLocation: 'inlineScript'
              inlineScript: 'az upgrade --yes'
-
-          - task: AzureCLI@2
-            displayName: 'Create RG'
-            inputs:
-             azureSubscription: 'DevTest-ServiceConnection'
-             scriptType: 'ps'
-             scriptLocation: 'inlineScript'
-             inlineScript: 'az group create --name $(RGname) --location $(region)'
          
           - task: AzureCLI@2
             displayName: 'Deploy Bicep File'
@@ -39,4 +31,4 @@ jobs:
              azureSubscription: 'DevTest-ServiceConnection'
              scriptType: 'ps'
              scriptLocation: 'inlineScript'
-             inlineScript: 'az deployment group create -f $(Agent.BuildDirectory)/s/BicepFiles/StoAcct.bicep -g $(RGname) --parameters region=$(region) StoAccountName=$(StoAccountName) ContainerName=$(ContainerName) sku=$(sku)'    
+             inlineScript: 'az deployment sub create -f $(Agent.BuildDirectory)/s/BicepFiles/main.bicep -l $(region)'    
