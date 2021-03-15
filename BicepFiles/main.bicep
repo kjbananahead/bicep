@@ -1,10 +1,10 @@
 targetScope = 'subscription'
-param RGname string = '$(RGname)'
-param region string = '$(region)'
+param RGname string
+param region string = 'EastUS2'
 
-param ContainerName string = '$(ContainerName)'
-param StoAccountName string = '$(StoAccountName)'
-param sku string = '$(sku)'
+param ContainerName string
+param StoAccountName string
+param sku string = 'Standard_LRS'
 
 
 resource rg 'Microsoft.Resources/resourceGroups@2020-06-01' = {
