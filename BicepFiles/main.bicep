@@ -14,14 +14,14 @@ resource rg 'Microsoft.Resources/resourceGroups@2020-06-01' = {
 }
 
 module StoAcctMod 'StoAcct.bicep' = {
-name: 'StoAcctDeploy'
-scope: rg
-params: {
-  ContainerName: ContainerName
-  region: region
-  sku: sku
-  StoAccountName: StoAccountName
-}
+  name: 'StoAcctDeploy'
+  scope: rg
+  params: {
+    ContainerName: ContainerName
+    region: region
+    sku: sku
+    StoAccountName: StoAccountName
+  }
 }
 
 module LogWorkspaceMod 'LogWorkspace.bicep' = {
