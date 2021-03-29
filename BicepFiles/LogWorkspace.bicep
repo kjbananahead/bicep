@@ -8,5 +8,18 @@ resource logWorkspace 'Microsoft.OperationalInsights/workspaces@2020-10-01' = {
   location: region
 }
 
+resource VMInsightsSolution 'Microsoft.OperationsManagement/solutions@2015-11-01-preview' = {
+  name: 'VMInsightsSolution'
+  location: region
+  plan: {
+   name: 'VMInsights'
+   product: 'OMSGallery/VMInsights'
+   publisher: 'Microsoft'
+  }
+  properties:{
+    workspaceResourceId: logWorkspace.id
+  }
+}
+
 
 output WorkspaceId string = logWorkspace.properties.customerId
