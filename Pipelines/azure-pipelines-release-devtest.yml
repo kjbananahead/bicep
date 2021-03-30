@@ -16,14 +16,6 @@ jobs:
         deploy:
           steps:
           - checkout: self
-          
-          - task: AzureCLI@2
-            displayName: 'Upgrade AzCLI'
-            inputs:
-             azureSubscription: 'DevTest-ServiceConnection'
-             scriptType: 'ps'
-             scriptLocation: 'inlineScript'
-             inlineScript: 'az upgrade --yes'
          
           - task: AzureCLI@2
             displayName: 'Deploy Bicep File'
