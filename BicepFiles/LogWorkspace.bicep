@@ -2,6 +2,11 @@ param region string = 'SouthCentralUS'
 
 param WorkspaceName string = 'KevDemoLogWorkspace'
 
+var vmInsights = {
+  name: 'VMInsights(${WorkspaceName})'
+  galleryName: 'VMInsights'
+}
+
 resource logWorkspace 'Microsoft.OperationalInsights/workspaces@2020-10-01' = {
   name: WorkspaceName
   location: region
@@ -11,14 +16,14 @@ resource logWorkspace 'Microsoft.OperationalInsights/workspaces@2020-10-01' = {
 }
 
 resource VMInsightsSolution 'Microsoft.OperationsManagement/solutions@2015-11-01-preview' = {
-  name: 'VMInsightsSolution'
+  name: vmInsights.name
   location: region
   dependsOn: [
     logWorkspace
   ]
   plan: {
-    name: 'VMInsights'
-    product: 'OMSGallery/VMInsights'
+    name: vmInsights.name
+    product: 'OMSGallery/${vmInsights.galleryName}'
     publisher: 'Microsoft'
     promotionCode: ''
   }
