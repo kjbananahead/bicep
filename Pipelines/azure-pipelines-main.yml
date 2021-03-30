@@ -4,47 +4,23 @@ trigger:
 pool:
  vmImage: windows-latest
 
+variables:
+  DevReleaseTemplate: './azure-pipelines-release-devtest.yml'
+  ProdReleaseTemplate: './azure-pipelines-release-prod.yml'
+
 stages:
 - stage: 'DevTest'
   displayName: 'Deploy to DevTest environment'
   jobs:
-  - deployment: DeploySolution
-    displayName: 'Deploy Resources'
-    variables:
-    - group: 'Dev-Variables' # points to variable group in Azure DevOps
-    environment: $(EnvironmentName) # points to environment in Azure DevOps
-    strategy:
-      runOnce:
-        deploy:
-          steps:
-          - checkout: self
-         
-          - task: AzureCLI@2
-            displayName: 'Deploy Bicep File'
-            inputs:
-             azureSubscription: $(ServiceConnectionName)
-             scriptType: 'ps'
-             scriptLocation: 'inlineScript'
-             inlineScript: 'az deployment sub create -f $(Agent.BuildDirectory)/s/BicepFiles/main.bicep -l $(region) --parameters RGname=$(RGname) region=$(region) StoAccountName=$(StoAccountName) ContainerName=$(ContainerName) sku=$(sku) WorkspaceName=$(WorkspaceName)'  
+  - template: ${{ variables.DevReleaseTemplate }}
+    parameters:
+      variableGroup: 'Dev-Variables'
+      environment: 'DevTest'
 
 - stage: 'Prod'
   displayName: 'Deploy to Prod environment'
   jobs:
-  - deployment: DeploySolution
-    displayName: 'Deploy Resources'
-    variables:
-    - group: 'Prod-Variables' # points to variable group in Azure DevOps
-    environment: $(EnvironmentName) # points to environment in Azure DevOps
-    strategy:
-      runOnce:
-        deploy:
-          steps:
-          - checkout: self
-         
-          - task: AzureCLI@2
-            displayName: 'Deploy Bicep File'
-            inputs:
-             azureSubscription: $(ServiceConnectionName)
-             scriptType: 'ps'
-             scriptLocation: 'inlineScript'
-             inlineScript: 'az deployment sub create -f $(Agent.BuildDirectory)/s/BicepFiles/main.bicep -l $(region) --parameters RGname=$(RGname) region=$(region) StoAccountName=$(StoAccountName) ContainerName=$(ContainerName) sku=$(sku) WorkspaceName=$(WorkspaceName)'  
+  - template: ${{ variables.ProdReleaseTemplate }}
+    parameters:
+      variableGroup: 'Prod-Variables'
+      environment: 'Prod'
