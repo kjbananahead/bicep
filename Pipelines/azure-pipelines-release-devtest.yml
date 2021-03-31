@@ -23,4 +23,8 @@ jobs:
              azureSubscription: 'DevTest-ServiceConnection'
              scriptType: 'ps'
              scriptLocation: 'inlineScript'
-             inlineScript: 'az deployment sub create -f $(Agent.BuildDirectory)/s/BicepFiles/main.bicep -l $(region) --parameters RGname=$(RGname) region=$(region) StoAccountName=$(StoAccountName) ContainerName=$(ContainerName) sku=$(sku) WorkspaceName=$(WorkspaceName)'    
+             inlineScript: 'az deployment sub create -f $(Agent.BuildDirectory)/s/BicepFiles/main.bicep -l $(region) `
+             --parameters RGname=$(RGname) region=$(region) StoAccountName=$(StoAccountName) ContainerName=$(ContainerName) `
+             sku=$(sku) WorkspaceName=$(WorkspaceName) VMname=$(VMname) VMsize=$(VMsize) vNetAddressSpace=$(vNetAddressSpace) `
+             vNetName=$(vNetName) vNetRGname=$(vNetRGname) vNetSubnetName=$(vNetSubnetName) backendSubnet=$(backendSubnet) `
+             VMadminUsername=$(VMadminUsername) VMadminPassword=$(VMadminPassword) osDiskType=$(osDiskType)'  

@@ -1,6 +1,6 @@
 targetScope = 'subscription'
 param RGname string
-param region string = 'EastUS2'
+param region string = 'SouthCentralUS'
 
 param ContainerName string
 param StoAccountName string
@@ -8,7 +8,19 @@ param sku string = 'Standard_LRS'
 
 param WorkspaceName string
 
-resource rg 'Microsoft.Resources/resourceGroups@2020-06-01' = {
+param VMname string
+param VMsize string
+param VMadminUsername string
+@secure()
+param VMadminPassword string
+param vNetName string
+param vNetRGname string
+param vNetAddressSpace string
+param vNetSubnetName string
+param backendSubnet string
+param osDiskType string
+
+resource rg 'Microsoft.Resources/resourceGroups@2020-10-01' = {
   name: RGname
   location: region
 }
@@ -31,4 +43,22 @@ module LogWorkspaceMod 'LogWorkspace.bicep' = {
     WorkspaceName: WorkspaceName
     region: region
   }
+}
+
+module VmMod 'WindowsVM.bicep' = {
+name: 'VmDeploy'
+scope: rg
+params: {
+  virtualMachineName: VMname
+  virtualMachineRG: RGname
+  virtualMachineSize: VMsize
+  adminUsername: VMadminUsername
+  adminPassword: VMadminPassword
+  region: region
+  osDiskType: osDiskType
+  vNetName: vNetName
+  vNetRGname: vNetRGname
+  subnetName: vNetSubnetName
+  workspaceResourceId: LogWorkspaceMod.outputs.WorkspaceResourceId
+}
 }

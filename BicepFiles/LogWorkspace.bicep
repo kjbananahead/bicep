@@ -61,3 +61,4 @@ resource logWorkspaceDiagnostics 'Microsoft.Insights/diagnosticSettings@2017-05-
 }
 
 output WorkspaceId string = logWorkspace.properties.customerId
+output WorkspaceResourceId string = logWorkspace.id
