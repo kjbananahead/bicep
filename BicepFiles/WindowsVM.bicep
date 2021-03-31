@@ -49,7 +49,7 @@ resource nic 'Microsoft.Network/networkInterfaces@2018-10-01' = {
   dependsOn: []
 }
 
-resource virtualMachineName_resource 'Microsoft.Compute/virtualMachines@2018-06-01' = {
+resource virtualMachine 'Microsoft.Compute/virtualMachines@2018-06-01' = {
   name: virtualMachineName
   location: region
   tags: {}
@@ -86,8 +86,8 @@ resource virtualMachineName_resource 'Microsoft.Compute/virtualMachines@2018-06-
   }
 }
 
-resource virtualMachineName_daExtensionName 'Microsoft.Compute/virtualMachines/extensions@2019-12-01' = {
-  name: '${virtualMachineName_resource.name}/${daExtensionName}'
+resource virtualMachine_daExtensionName 'Microsoft.Compute/virtualMachines/extensions@2019-12-01' = {
+  name: '${virtualMachine.name}/${daExtensionName}'
   location: region
   properties: {
     publisher: 'Microsoft.Azure.Monitoring.DependencyAgent'
@@ -97,8 +97,8 @@ resource virtualMachineName_daExtensionName 'Microsoft.Compute/virtualMachines/e
   }
 }
 
-resource virtualMachineName_mmaExtensionName 'Microsoft.Compute/virtualMachines/extensions@2017-12-01' = {
-  name: '${virtualMachineName_resource.name}/${mmaExtensionName}'
+resource virtualMachine_mmaExtensionName 'Microsoft.Compute/virtualMachines/extensions@2017-12-01' = {
+  name: '${virtualMachine.name}/${mmaExtensionName}'
   location: region
   properties: {
     publisher: 'Microsoft.EnterpriseCloud.Monitoring'
@@ -115,4 +115,21 @@ resource virtualMachineName_mmaExtensionName 'Microsoft.Compute/virtualMachines/
   }
 }
 
+resource AutoShutdown 'Microsoft.DevTestLab/schedules@2018-09-15' = {
+  name: 'shutdown-${virtualMachine.name}'
+  properties:{
+    status: 'Enabled'
+    taskType: 'ComputeVmShutdownTask'
+    dailyRecurrence:{
+      time: '1700'
+    }
+    notificationSettings:{
+      status: 'Disabled'
+      timeInMinutes: 30
+      notificationLocale: 'en'
+    }
+    timeZoneId: 'Central Standard Time'
+    targetResourceId: virtualMachine.id
+  }
+}
 output adminUsername string = adminUsername
