@@ -116,7 +116,7 @@ resource virtualMachine_mmaExtensionName 'Microsoft.Compute/virtualMachines/exte
 }
 
 resource AutoShutdown 'Microsoft.DevTestLab/schedules@2018-09-15' = {
-  name: 'shutdown-${virtualMachine.name}'
+  name: 'shutdown-computevm-${virtualMachine.name}'
   location: region
   properties:{
     status: 'Enabled'
