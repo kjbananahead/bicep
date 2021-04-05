@@ -1,0 +1,54 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+      "RGname": {
+        "value": "kev-bicep-demo-prod"
+      },
+      "region": {
+        "value": "SouthCentralUS"
+      },
+      "ContainerName": {
+        "value": "prod-images"
+      },
+      "StoAccountName": {
+        "value": "kevbicepdemoprod"
+      },
+      "sku": {
+        "value": "Premium_LRS"
+      },
+      "WorkspaceName": {
+        "value": "KevDemoLogProd"
+      },
+      "VMname": {
+        "value": "demo-vm1-prod"
+      },
+      "VMsize": {
+        "value": "Standard_B2ms"
+      },
+      "VMadminUsername": {
+        "value": "kevin"
+      },
+      "VMadminPassword": {
+        "value": "securestring"
+      },
+      "vNetName": {
+        "value": "vnet-scus"
+      },
+      "vNetRGname": {
+        "value": "networking-scus"
+      },
+      "vNetAddressSpace": {
+        "value": "10.10.0.0/16"
+      },
+      "vNetSubnetName": {
+        "value": "backend"
+      },
+      "backendSubnet": {
+        "value": "10.10.1.0/24"
+      },
+      "osDiskType": {
+        "value": "Standard_LRS"
+      }
+    }
+  }
