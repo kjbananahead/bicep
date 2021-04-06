@@ -2,50 +2,33 @@ name: Deploy to Dev
 
 # Controls when the action will run. 
 on:
-  # Triggers the workflow on push or pull request events but only for the dev branch
+  # Triggers the workflow on push, but only for the dev branch
   push:
-    branches: [ dev ]
+    branches:
+      - dev
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  environment: Dev
   # This workflow contains a single job called "deploy"
   deploy:
-    # The type of runner that the job will run on
     runs-on: windows-latest
+    environment: Dev
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v2
-      
-- name: Azure Login
-  uses: Azure/login@v1.1
-  with:
-    # Paste output of `az ad sp create-for-rbac` as value of secret variable: AZURE_CREDENTIALS
-    creds: 
-    # Set this value to true to enable Azure PowerShell Login in addition to Az CLI login
-    enable-AzPSSession: # optional
-    # Set this value to true to enable support for accessing tenants without subscriptions
-    allow-no-subscriptions: # optional
-    
-    - name: Azure CLI Action
-  uses: Azure/cli@1.0.4
-  with:
-    # Specify the script here
-    inlineScript: 
-    # Azure CLI version to be used to execute the script. If not provided, latest version is used
-    azcliversion: # optional, default is latest
-    
-      # Runs a single command using the runners shell
-      - name: Run a one-line script
-        run: echo Hello, world!
+      - name: Checkout code # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2           
 
-      # Runs a set of commands using the runners shell
-      - name: Run a multi-line script
-        run: |
-          echo Add other actions to build,
-          echo test, and deploy your project.
+      - name: Azure Login
+        uses: Azure/login@v1.1
+        with:
+          creds: ${{ secrets.AZURE_CREDS_DEV }}
+    
+      - name: Deploy Bicep with AzCLI
+        uses: Azure/cli@1.0.4
+        with:
+          inlineScript: az deployment sub create -f $GITHUB_WORKSPACE/BicepFiles/main.bicep -l SouthCentralUS \
+          --parameters $GITHUB_WORKSPACE/Parameters/azure-parameters-dev.json --parameters VMadminPassword=${{ secrets.VMADMINPASSWORD }}
