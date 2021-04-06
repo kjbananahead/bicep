@@ -1,5 +1,3 @@
-# This is a basic workflow to help you get started with Actions
-
 name: Deploy to Dev
 
 # Controls when the action will run. 
@@ -13,8 +11,9 @@ on:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
-  build:
+  environment: Dev
+  # This workflow contains a single job called "deploy"
+  deploy:
     # The type of runner that the job will run on
     runs-on: windows-latest
 
