@@ -30,7 +30,7 @@
         "value": "kevin"
       },
       "VMadminPassword": {
-        "value": "securestring"
+        "value": ""
       },
       "vNetName": {
         "value": "vnet-scus"
