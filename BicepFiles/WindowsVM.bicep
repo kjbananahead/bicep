@@ -8,7 +8,6 @@ param vNetRGname string
 param workspaceResourceId string
 
 param virtualMachineName string
-param virtualMachineRG string
 param osDiskType string
 param virtualMachineSize string
 param adminUsername string
