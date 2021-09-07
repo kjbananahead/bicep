@@ -15,7 +15,9 @@ param VMadminUsername string
 param VMadminPassword string
 param vNetName string
 param vNetRGname string
+param vNetAddressSpace string
 param vNetSubnetName string
+param backendSubnet string
 param osDiskType string
 
 resource rg 'Microsoft.Resources/resourceGroups@2020-10-01' = {
@@ -48,6 +50,7 @@ name: 'VmDeploy'
 scope: rg
 params: {
   virtualMachineName: VMname
+  virtualMachineRG: RGname
   virtualMachineSize: VMsize
   adminUsername: VMadminUsername
   adminPassword: VMadminPassword
